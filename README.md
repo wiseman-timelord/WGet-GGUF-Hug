@@ -1,7 +1,5 @@
 # WGet-GGUF-Hug
-
-Quick Mashup Of Description for first working version...improve later, no time...
-
+WGet-GGUF-Hug is a PowerShell script designed to provide a simple interface for downloading files using the `wget` utility. It allows users to enter download URLs, extracts filenames, checks for existing files, and performs downloads. The script organizes downloaded files into "Downloads" and "Completed" folders. The program features a user-friendly menu system and informative status messages. Users can interact with the script to initiate downloads, view files in the "Downloads" or "Completed" folders, and exit the program. WGet-GGUF-Hug streamlines the download process and enhances user experience within a PowerShell environment.
 
 
 **Features and Functions of WGet-GGUF-Hug:**
@@ -43,6 +41,17 @@ Quick Mashup Of Description for first working version...improve later, no time..
      - Exit the program.
    - Handles invalid choices gracefully.
 
-**Summary of WGet-GGUF-Hug:**
 
-WGet-GGUF-Hug is a PowerShell script designed to provide a simple interface for downloading files using the `wget` utility. It allows users to enter download URLs, extracts filenames, checks for existing files, and performs downloads. The script organizes downloaded files into "Downloads" and "Completed" folders. The program features a user-friendly menu system and informative status messages. Users can interact with the script to initiate downloads, view files in the "Downloads" or "Completed" folders, and exit the program. WGet-GGUF-Hug streamlines the download process and enhances user experience within a PowerShell environment.
+
+```
+
+                     -= WGet-GGUF-Hug =-
+
+                1) Enter Download URL
+                2) Scan Downloads Folder
+                3) Scan Completed Folder
+                0) Exit Program
+
+Enter your choice:
+
+```
