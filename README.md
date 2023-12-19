@@ -1,6 +1,6 @@
 # WGet-GGUF-Hug
 Status: Working
-* This program has only been tested so far on "TheBloke/CodeUp-Llama-2-13B-Chat-HF-GGUF", but it was done on public wifi, and worked splendidly.
+* This program has only been tested so far on "TheBloke/CodeUp-Llama-2-13B-Chat-HF-GGUF", this is currently being done as I write, and it is doing so splendidly onpublic wifi, however, resuming downloads is un-tested. This program will be further developed when I have access to GPT4 again.  
 
 ## Description
 WGet-GGUF-Hug is a PowerShell script designed to simplify file downloads using the `wget` utility. It offers a straightforward interface for entering download URLs, extracting filenames, checking for existing files, and executing downloads. The script efficiently organizes downloaded files into "Downloads" and "Completed" folders, enhancing user experience within a PowerShell environment.
