@@ -60,7 +60,7 @@ Saving to: './temporary/una-cybertron-7b-v3-oma.Q8_0.gguf'
 - URL linked to a file with ".gguf" or ".gptq" format.
 
 ## Note
-WGet-LLM-Hug, a simplified concept compared to "Downlord", is focused on functionality and ease of maintenance, catering to specific download needs with a user-friendly approach.
+WGet-LLM-Hug is a simplified concept compared to "Downlord", WGet-LLM-Hug is focused on language models, where as Downlord is intended as a more general purpose downloader.
 
 ## Disclaimer
-This program is provided "as is" without warranties or support. Users are responsible for the content they download and use, and any resulting damage to hardware or sanity.
+This program is provided "as is" without warranties or support. Users are responsible for the content they, download and use, as well as, any resulting damage to, hardware or sanity.
