@@ -1,6 +1,6 @@
 # WGet-GGUF-Hug
 Status: Working
-<br>This program is designed to be able to run on Powershell 5 (windows 8.1 onwards), this requires a little backtracking while I'm working on it, however, next update will include
+<br>The next update will include
 - file automatically moved to the ".\completed" folder.
 - the resuming of downloads will hopefully work.
 - a installer/setup batch, including downloading of WGet and setup of folders.
@@ -8,7 +8,7 @@ Status: Working
 - GPT4 magic (original was written in GPT3.5).
 
 ## Description
-WGet-GGUF-Hug is a PowerShell script designed to simplify file downloads using the `wget` utility. It offers a straightforward interface for entering download URLs, extracting filenames, checking for existing files, and executing downloads. The script efficiently organizes downloaded files into "Downloads" and "Completed" folders, enhancing user experience within a PowerShell environment.
+WGet-GGUF-Hug is a PowerShell script designed to simplify file downloads using the `wget` utility. It offers a straightforward interface for entering HuggingFace download URLs, extracting filenames, checking for existing files, and executing downloads. The script efficiently organizes downloaded files into "Downloads" and "Completed" folders, enhancing user experience within a PowerShell environment. This program is designed for Powershell 5 (windows 8.1 onwards), the idea is, you have, no internet and a dated laptop, but now you can still get language models on public wifi.
 
 ## Features:
 - **Reading of Complex URLs**: WGet-GGUF-Hug extracts filenames from URLs containing ".gguf" in a specific format.
