@@ -4,7 +4,7 @@ Status: Working
 - file automatically moved to the ".\completed" folder.
 - the resuming of downloads will hopefully work.
 - a installer/setup batch, including downloading of WGet and setup of folders.
-- Many more improvements and refinements.
+- Small improvements and refinements.
 - GPT4 magic (original was written in GPT3.5).
 
 ## Description
