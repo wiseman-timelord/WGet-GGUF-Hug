@@ -1,8 +1,11 @@
 # WGet-GGUF-Hug
 Status: Working
-<br>This program has only been tested so far on "TheBloke/CodeUp-Llama-2-13B-Chat-HF-GGUF" (the 8-Bit versuion), the file correctly downloaded. This program will be further developed when I have, my own internet and access to GPT4, again. Current issues are...
-- the file was not automatically moved to the ".\completed" folder.
-- the resuming of downloads is un-tested, and may not work. 
+<br>This program is designed to be able to run on Powershell 5 (windows 8.1 onwards), this requires a little backtracking while I'm working on it, however, next update will include
+- file automatically moved to the ".\completed" folder.
+- the resuming of downloads will hopefully work.
+- a installer/setup batch, including downloading of WGet and setup of folders.
+- Many more improvements and refinements.
+- GPT4 magic (original was written in GPT3.5).
 
 ## Description
 WGet-GGUF-Hug is a PowerShell script designed to simplify file downloads using the `wget` utility. It offers a straightforward interface for entering download URLs, extracting filenames, checking for existing files, and executing downloads. The script efficiently organizes downloaded files into "Downloads" and "Completed" folders, enhancing user experience within a PowerShell environment.
