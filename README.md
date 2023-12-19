@@ -1,20 +1,16 @@
-# WGet-GGUF-Hug
+# WGet-LLM-Hug
 Status: Working
-<br>The next update will include
-- file automatically moved to the ".\completed" folder.
-- the resuming of downloads will hopefully work.
-- a installer/setup batch, including downloading of WGet and setup of folders.
-- Small improvements and refinements.
-- GPT4 magic (original was written in GPT3.5).
 
 ## Description
-WGet-GGUF-Hug is a PowerShell script designed to simplify file downloads using the `wget` utility. It offers a straightforward interface for entering HuggingFace download URLs, extracting filenames, checking for existing files, and executing downloads. The script efficiently organizes downloaded files into "Downloads" and "Completed" folders, enhancing user experience within a PowerShell environment. This program is designed for Powershell 5 (windows 8.1 onwards), the idea is, you have, no internet and a dated laptop, but now you can still get language models on public wifi.
+WGet-LLM-Hug is a PowerShell script complemented by Batch scripts, designed to simplify file downloads, especially for HuggingFace model files, using the `wget` utility. It's tailored for users with limited internet access and older systems, supporting PowerShell 5 (Windows 8.1 onwards). The program organizes downloads efficiently and offers a straightforward interface for managing file downloads.
 
 ## Features:
-- **Reading of Complex URLs**: WGet-GGUF-Hug extracts filenames from URLs containing ".gguf" in a specific format.
-- **Download Method Selection**: WGet-GGUF-Hug uses the `wget.exe` utility for downloads.
-- **File Management**: WGet-GGUF-Hug organizes downloaded files into "Downloads" and "Completed" folders.
-- **Interactive Menus**: WGet-GGUF-Hug features a user-friendly menu system with options to enter a download URL, scan files in the "Downloads" or "Completed" folder, and exit the program.
+- **Complex URL Reading**: Extracts filenames from URLs containing ".gguf" and ".gptq" in a specific format.
+- **Download Method Selection**: Utilizes `wget.exe` for downloads.
+- **File Management**: Organizes files into "temporary", "Downloads", and "Completed" folders.
+- **Interactive Menus**: Features user-friendly menu systems in both PowerShell and Batch scripts.
+- **Installer Script**: Ensures the setup of required folders and downloads `wget.exe` if not present.
+- **Launcher Script**: Provides an easy way to run the PowerShell script, especially for users unfamiliar with PowerShell commands.
 
 ## Interface:
 ```
@@ -51,19 +47,19 @@ Saving to: './temporary/una-cybertron-7b-v3-oma.Q8_0.gguf'
 ```
 
 ## Usage
-1. Clone the repository or download the script.
-2. Run the script using PowerShell: `powershell .\WGet-GGUF-Hug.ps1`.
-3. Follow the on-screen prompts to initiate downloads, scan folders, or exit the program.
+1. Clone the repository or download the scripts.
+2. Run the installer (setup batch script) to ensure `wget.exe` is installed and folders are set up.
+3. Use the launcher script to start the PowerShell script.
+4. Follow the on-screen prompts to initiate downloads, scan folders, or exit the program.
 
 ## Requirements
-- PowerShell 5.1 or higher
-- Internet connection
-- `wget.exe` utility available in the system PATH
-- URL linked to the file with ".gguf" format
+- PowerShell 5.1 or higher.
+- Internet connection.
+- `wget.exe` installed and accessible (handled by the installer script).
+- URL linked to a file with ".gguf" or ".gptq" format.
 
 ## Note
-This is a much simplified version of the concept of "Downlord", a robust downloader, however, HuggingFace broke for Downlord, and it became impossible to fix on gpt3.5, hence, WGet-GGUF-Hug has a specific purpose, and is able to be maintained with GPT 3.5, and its for the specific purpose I needed Downlord for, if you want it for some other format of file, then try, Downlord-Py or Downlord-Ps, or modify the scripts.
+WGet-LLM-Hug, a simplified concept compared to "Downlord", is focused on functionality and ease of maintenance, catering to specific download needs with a user-friendly approach.
 
 ## Disclaimer
-This program is provided "as is", and the creator, makes and produces, no, warranties and/or support. Users are solely responsible for the content they, download and use, and also any resulting damage to, hardware and/or sanity.
-
+This program is provided "as is" without warranties or support. Users are responsible for the content they download and use, and any resulting damage to hardware or sanity.
