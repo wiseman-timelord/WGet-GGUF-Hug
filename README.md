@@ -1,50 +1,18 @@
 # WGet-GGUF-Hug
-WGet-GGUF-Hug is a PowerShell script designed to provide a simple interface for downloading files using the `wget` utility. It allows users to enter download URLs, extracts filenames, checks for existing files, and performs downloads. The script organizes downloaded files into "Downloads" and "Completed" folders. The program features a user-friendly menu system and informative status messages. Users can interact with the script to initiate downloads, view files in the "Downloads" or "Completed" folders, and exit the program. WGet-GGUF-Hug streamlines the download process and enhances user experience within a PowerShell environment.
+Status: Working
+* This program has only been tested so far on "TheBloke/CodeUp-Llama-2-13B-Chat-HF-GGUF", but it was done on public wifi, and worked splendidly.
 
+## Description
+WGet-GGUF-Hug is a PowerShell script designed to simplify file downloads using the `wget` utility. It offers a straightforward interface for entering download URLs, extracting filenames, checking for existing files, and executing downloads. The script efficiently organizes downloaded files into "Downloads" and "Completed" folders, enhancing user experience within a PowerShell environment.
 
-**Features and Functions of WGet-GGUF-Hug:**
+## Features:
+- **Reading of Complex URLs**: WGet-GGUF-Hug extracts filenames from URLs containing ".gguf" in a specific format.
+- **Download Method Selection**: WGet-GGUF-Hug uses the `wget.exe` utility for downloads.
+- **File Management**: WGet-GGUF-Hug organizes downloaded files into "Downloads" and "Completed" folders.
+- **Interactive Menus**: WGet-GGUF-Hug features a user-friendly menu system with options to enter a download URL, scan files in the "Downloads" or "Completed" folder, and exit the program.
 
-1. **Start-Script:**
-   - Displays a startup message when the script begins.
-
-2. **Initialize-Folders:**
-   - Creates necessary folders, such as "Downloads" and "Completed," and sets initial folders.
-
-3. **Extract-Filename:**
-   - Extracts the filename from a given URL that contains ".gguf" in a specific format.
-   - Displays the extracted filename.
-   - Pauses for 2 seconds for visibility.
-
-4. **Show-Menu:**
-   - Clears the console and displays a menu for user interaction.
-
-5. **Download:**
-   - Accepts a URL from the user.
-   - Extracts the filename from the URL.
-   - Displays the extracted filename.
-   - Checks if the file already exists in the "Downloads" or "Completed" folder.
-   - Downloads the file using `wget.exe` and specifies the output file.
-   - Displays the output of the `wget` command.
-   - Moves the downloaded file to the "Completed" folder upon successful download.
-   - Provides status messages for successful or failed downloads.
-
-6. **Scan-Folder:**
-   - Displays a list of files in the specified folder (either "Downloads" or "Completed").
-
-7. **Main:**
-   - Initiates the main program loop.
-   - Displays the startup message, initializes folders, and presents a menu for user choices.
-   - Allows the user to:
-     - Enter a download URL.
-     - Scan files in the "Downloads" folder.
-     - Scan files in the "Completed" folder.
-     - Exit the program.
-   - Handles invalid choices gracefully.
-
-
-
+## Interface:
 ```
-
                      -= WGet-GGUF-Hug =-
 
                 1) Enter Download URL
@@ -55,3 +23,34 @@ WGet-GGUF-Hug is a PowerShell script designed to provide a simple interface for 
 Enter your choice:
 
 ```
+```
+Resolving cdn-lfs.huggingface.co (cdn-lfs.huggingface.co)...
+ 108.156.46.81, 108.156.46.127, 108.156.46.84, ...
+Connecting to cdn-lfs.huggingface.co (cdn-lfs.huggingface.co
+)|108.156.46.81|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 13831319424 (13G) [binary/octet-stream]
+Saving to: 'C:/Programming/WGet-GGUF-Hug/WGet-GGUF-Hug v0p2/
+Downloads/codeup-llama-2-13b-chat-hf.Q8_0.gguf'
+
+oads/codeup-ll  38%[>    ]   4.99G  2.08MB/s    eta 64m 45s
+
+```
+
+## Usage
+1. Clone the repository or download the script.
+2. Run the script using PowerShell: `powershell .\WGet-GGUF-Hug.ps1`.
+3. Follow the on-screen prompts to initiate downloads, scan folders, or exit the program.
+
+## Requirements
+- PowerShell 5.1 or higher
+- Internet connection
+- `wget.exe` utility available in the system PATH
+- URL linked to the file with ".gguf" format
+
+## Note
+This is a much simplified version of the concept of "Downlord", a robust downloader, however, HuggingFace broke for Downlord, and it became impossible to fix on gpt3.5, hence, WGet-GGUF-Hug has a specific purpose, and is able to be maintained with GPT 3.5, and its for the specific purpose I needed Downlord for, if you want it for some other format of file, then try, Downlord-Py or Downlord-Ps, or modify the scripts.
+
+## Disclaimer
+This program is provided "as is", and the creator, makes and produces, no, warranties and/or support. Users are solely responsible for the content they, download and use, and also any resulting damage to, hardware and/or sanity.
+
