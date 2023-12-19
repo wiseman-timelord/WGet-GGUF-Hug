@@ -18,27 +18,35 @@ WGet-GGUF-Hug is a PowerShell script designed to simplify file downloads using t
 
 ## Interface:
 ```
-                     -= WGet-GGUF-Hug =-
 
-                1) Enter Download URL
-                2) Scan Downloads Folder
-                3) Scan Completed Folder
-                0) Exit Program
+
+
+                     -= WGet-LLM-Hug =-
+
+                      1) Enter URL
+                      2) Scan Folders
+                      3) Empty Temp
+                      0) Exit Program
 
 Enter your choice:
 
-```
-```
-Resolving cdn-lfs.huggingface.co (cdn-lfs.huggingface.co)...
- 108.156.46.81, 108.156.46.127, 108.156.46.84, ...
-Connecting to cdn-lfs.huggingface.co (cdn-lfs.huggingface.co
-)|108.156.46.81|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 13831319424 (13G) [binary/octet-stream]
-Saving to: 'C:/Programming/WGet-GGUF-Hug/WGet-GGUF-Hug v0p2/
-Downloads/codeup-llama-2-13b-chat-hf.Q8_0.gguf'
 
-oads/codeup-ll  38%[>    ]   4.99G  2.08MB/s    eta 64m 45s
+
+```
+```
+Resolving cdn-lfs-us-1.huggingface.co (cdn-lfs-us-1.huggingf
+ace.co)... 18.244.140.127, 18.244.140.29, 18.244.140.43, ...
+
+Connecting to cdn-lfs-us-1.huggingface.co (cdn-lfs-us-1.hugg
+ingface.co)|18.244.140.127|:443... connected.
+WARNING: cannot verify cdn-lfs-us-1.huggingface.co's certifi
+cate, issued by 'CN=Amazon RSA 2048 M01,O=Amazon,C=US':
+  Unable to locally verify the issuer's authority.
+HTTP request sent, awaiting response... 200 OK
+Length: 7695857376 (7.2G) [binary/octet-stream]
+Saving to: './temporary/una-cybertron-7b-v3-oma.Q8_0.gguf'
+
+   ./temporary   0%[     ]   1.84M  51.1KB/s    eta 21h 32m
 
 ```
 
