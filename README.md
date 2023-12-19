@@ -54,9 +54,9 @@ Saving to: './temporary/una-cybertron-7b-v3-oma.Q8_0.gguf'
 
 ## Requirements
 - Windows 7/8.1/10/11
-- PowerShell 5.1 or higher.
+- PowerShell 5-7.
 - Internet connection.
-- `wget.exe` installed and accessible (handled by the installer script).
+- `wget.exe` through installer, supporting, x86, x64, ARM64.
 - URL linked to a file with ".gguf" or ".gptq" format.
 
 ## Note
