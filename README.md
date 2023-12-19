@@ -53,6 +53,7 @@ Saving to: './temporary/una-cybertron-7b-v3-oma.Q8_0.gguf'
 4. Follow the on-screen prompts to initiate downloads, scan folders, or exit the program.
 
 ## Requirements
+- Windows 7/8.1/10/11
 - PowerShell 5.1 or higher.
 - Internet connection.
 - `wget.exe` installed and accessible (handled by the installer script).
