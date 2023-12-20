@@ -1,7 +1,8 @@
 # WGet-LLM-Hug
 Status: Working(ish)
-<br> Curent issues to be progressed are...
+<br> Updates for next release...
 - Starting again instead of resuming downloads, resume is broken.
+- Option `Exit Program` is reloading menu instead of exiting to shell.
 - Improvements for UI layout in both, main script and setup-installer.
   
 ## Description
