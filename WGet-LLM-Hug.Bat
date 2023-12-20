@@ -4,8 +4,7 @@ color 0E
 
 :: Run Script
 echo.
-echo Launching PowerShell Script!
-echo.
+echo Launching PowerShell Script...
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\main.ps1"
 echo.
 echo PowerShell Script Exited!

@@ -13,7 +13,7 @@ function Create-Folder($path) {
 
 # Start script message
 function Start-Script {
-    Write-Host "Starting WGet-LLM-Hug..."
+    Write-Host "...WGet-LLM-Hug Has Started!"
     Start-Sleep -Seconds 2
 }
 
