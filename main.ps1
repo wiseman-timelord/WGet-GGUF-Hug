@@ -49,11 +49,10 @@ function Extract-Filename {
 
 function Download {
     Write-Host ""
-	$url = Read-Host "Enter Download URL"
+    $url = Read-Host "Enter Download URL"
 
     try {
         $filename = Extract-Filename -url $url
-
         Write-Host "`nFilename Extracted: $filename"
 
         $completedFilename = Join-Path $Script:completedFolder $filename
@@ -64,15 +63,14 @@ function Download {
             Start-Sleep -Seconds 2
         } else {
             if (Test-Path $downloadPath) {
-                Write-Host "File '$filename' already exists in ${Script:downloadFolder}, starting new download..."
+                Write-Host "Resuming download of '$filename'..."
             } else {
                 Write-Host "Downloading '$filename'..."
             }
 
             $downloadCommand = ".\libraries\wget.exe"
-            $arguments = "--no-check-certificate", "-O", "`"$($downloadPath)`"", "$($url)"
+            $arguments = "-c", "--no-check-certificate", "-O", "`"$($downloadPath)`"", "$($url)"
 
-            # Diagnostics: Print out the command and arguments
             Write-Host "Command to execute: $downloadCommand"
             Write-Host "Arguments: $($arguments -join ' ')"
 
@@ -91,6 +89,8 @@ function Download {
         Start-Sleep -Seconds 2
     }
 }
+
+
 
 function Scan-Folders {
     Write-Host "Scanning Folders..."
@@ -115,6 +115,7 @@ function Empty-Temp {
 }
 
 function Show-Menu {
+	Start-Sleep -Seconds 10
     Clear-Host
 	Write-Host "======================( WGET-LLM-HUG )======================"
     Write-Host "`n`n`n`n`n`n`n`n"
@@ -133,7 +134,9 @@ function Main {
         $choice = Read-Host "Enter your choice"
 
         switch ($choice) {
-            "0" { break }
+            "0" { 
+                exit # This will exit the script and return to the command prompt
+            }
             "1" { Download }
             "2" { Scan-Folders }
             "3" { Empty-Temp }
@@ -141,5 +144,6 @@ function Main {
         }
     } while ($true)
 }
+
 
 Main

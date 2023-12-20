@@ -7,8 +7,7 @@ echo.
 echo Launching PowerShell Script...
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\main.ps1"
 echo.
-echo PowerShell Script Exited!
-echo.
 
 :: Exit Launcher
+echo PowerShell Script Exited!
 pause
