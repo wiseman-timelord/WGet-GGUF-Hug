@@ -122,11 +122,12 @@ function Empty-Temp {
 
 function Show-Menu {
     Clear-Host
-    Write-Host "`n`n`n`n`n`n                     -= WGet-LLM-Hug =-`n"
-    Write-Host "                      1) Enter URL"
-    Write-Host "                      2) Scan Folders"
-    Write-Host "                      3) Empty Temp"
-    Write-Host "                      0) Exit Program`n"
+	Write-Host "======================( WGET-LLM-HUG )======================"
+    Write-Host "`n`n`n`n`n`n`n`n"
+    Write-Host "                  1) Enter New Url`n"
+    Write-Host "                  2) Scan Program Folders`n"
+    Write-Host "                  3) Empty Temp Folder`n"
+    Write-Host "                  0) Exit Program`n`n`n`n`n`n`n`n`n`n`n"
 }
 
 function Main {
