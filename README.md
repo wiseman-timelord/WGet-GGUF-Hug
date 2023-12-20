@@ -50,19 +50,36 @@ Enter your choice:
 
 ```
 ```
+--2023-12-20 13:34:23--  https://cdn-lfs-us-1.huggingface.co
+/repos/52/79/5279038ee7db94f4d3fe0026f9ec759ac5211a30aad8ee7
+5fd69a470306e8c7f/cbfc52efd83d35ed194f0f33bb588fc6f7bd17b98e
+f62ba4e3af13e21e833dd1?response-content-disposition=attachme
+nt%3B+filename*%3DUTF-8''quantum-dpo-v0.1.Q8_0.gguf%3B+filen
+ame%3D%22quantum-dpo-v0.1.Q8_0.gguf%22%3B&Expires=1703338396
+&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1Ro
+YW4iOnsiQVdTOkVwb2NoVGltZSI6MTcwMzMzODM5Nn19LCJSZXNvdXJjZSI6
+Imh0dHBzOi8vY2RuLWxmcy11cy0xLmh1Z2dpbmdmYWNlLmNvL3JlcG9zLzUy
+Lzc5LzUyNzkwMzhlZTdkYjk0ZjRkM2ZlMDAyNmY5ZWM3NTlhYzUyMTFhMzBh
+YWQ4ZWU3NWZkNjlhNDcwMzA2ZThjN2YvY2JmYzUyZWZkODNkMzVlZDE5NGYw
+ZjMzYmI1ODhmYzZmN2JkMTdiOThlZjYyYmE0ZTNhZjEzZTIxZTgzM2RkMT9y
+ZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSoifV19&Signature=Z2Xv6
+7Eb6QyiFHP1R-MQyiOj6u8Jd42SOX5J5pneGO9H624EOmMD0enBkCfqN9pvB
+91ndo6ymJQtGXCIeV18vUpWVu~AWDY2hYgFM2bwSWFYga9nFQznve62I1C1r
+D33OKIKPp33Gg3pNbq8iaxTPLt2RC-61vcOMquW1u5gvutCTV-f6LAUFfGdG
+P7WVFe34xevc8uZyydGccKHN6fXIY5CnelH0UWJmkC3bI8qNBRolaCTNyuHs
+XTAUBjJJm4Xe15kNnaT-C00Kj~p4LfksSYJB2VwuZNNSdN7S4jbhUqY3fwxy
+KrB0nnG5atZiD2gM8jT-VEe7gg-NA~4reO1jw__&Key-Pair-Id=KCD77M1F
+0VK2B
 Resolving cdn-lfs-us-1.huggingface.co (cdn-lfs-us-1.huggingf
-ace.co)... 18.244.140.127, 18.244.140.29, 18.244.140.43, ...
+ace.co)... 18.244.140.29, 18.244.140.43, 18.244.140.108, ...
 
 Connecting to cdn-lfs-us-1.huggingface.co (cdn-lfs-us-1.hugg
-ingface.co)|18.244.140.127|:443... connected.
-WARNING: cannot verify cdn-lfs-us-1.huggingface.co's certifi
-cate, issued by 'CN=Amazon RSA 2048 M01,O=Amazon,C=US':
-  Unable to locally verify the issuer's authority.
+ingface.co)|18.244.140.29|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 7695857376 (7.2G) [binary/octet-stream]
-Saving to: './temporary/una-cybertron-7b-v3-oma.Q8_0.gguf'
+Length: 7696793728 (7.2G) [binary/octet-stream]
+Saving to: './temporary/quantum-dpo-v0.1.Q8_0.gguf'
 
-   ./temporary   0%[     ]   1.84M  51.1KB/s    eta 21h 32m
+emporary/quant  38%[>    ]   2.77G  1.49MB/s    eta 58m 57s
 
 ```
 
