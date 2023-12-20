@@ -48,11 +48,10 @@ Saving to: './temporary/una-cybertron-7b-v3-oma.Q8_0.gguf'
 
 ## Usage
 1. Copy WGet-LLM-Hug to its own folder, then run `Setup-Install.Bat`, this sets up, `wget.exe` and folders.
-2. Run `Setup-Install.Bat`, Use the launcher to start the PowerShell script.
-3. Create folder for model to download to, and put in it, config.json and the readme.md, from HuggingFace.
-4. Partially download the model file, then cancel the download and copy the link it gave (it must be done like this).
-5. Run `WGet-LLM-Hug.Bat`, select `Enter URL`from the menu, and paste the link, it will now download. 
-6. When download is finished then move it from `.\Completed` to the model folder you made.
+2. Create folder for model to download to, and put in it, config.json and the readme.md, from HuggingFace.
+3. Partially download the model file, then cancel the download and copy the link it gave (it must be done like this).
+4. Run `WGet-LLM-Hug.Bat`, select `Enter URL`from the menu, and paste the link, it will now download. 
+5. When download is finished then move it from `.\Completed` to the model folder you made.
 
 ## Requirements
 - Windows 7/8.1/10/11
