@@ -14,19 +14,36 @@ WGet-LLM-Hug is a PowerShell script complemented by Batch scripts, designed to s
 
 ## Interface:
 ```
+======================( WGET-LLM-HUG )======================
 
 
 
-                     -= WGet-LLM-Hug =-
 
-                      1) Enter URL
-                      2) Scan Folders
-                      3) Empty Temp
-                      0) Exit Program
+
+
+
+
+
+
+                  1) Enter New Url
+
+                  2) Scan Program Folders
+
+                  3) Empty Temp Folder
+
+                  0) Exit Program
+
+
+
+
+
+
+
+
+
+
 
 Enter your choice:
-
-
 
 ```
 ```
