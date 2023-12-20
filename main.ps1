@@ -49,7 +49,7 @@ function Extract-Filename {
 
 function Download {
     Write-Host ""
-	$url = Read-Host "Enter URL"
+	$url = Read-Host "Enter Download URL"
 
     try {
         $filename = Extract-Filename -url $url
@@ -58,10 +58,6 @@ function Download {
 
         $completedFilename = Join-Path $Script:completedFolder $filename
         $downloadPath = Join-Path $Script:downloadFolder $filename
-
-        # Diagnostics: Print out the paths
-        Write-Host "Download Path: $downloadPath"
-        Write-Host "Completed File Path: $completedFilename"
 
         if (Test-Path $completedFilename) {
             Write-Host "Download of '$filename' already completed!"
