@@ -43,10 +43,8 @@ function Extract-Filename {
         }
     }
 
-    # Instead of using 'throw', we use Write-Host to display the error message in red
     Write-Host "Unable to extract filename from the URL." -ForegroundColor Red
-    # Optionally, you can throw an exception after displaying the message
-    throw "Filename extraction failed"
+    throw "Filename Extraction Failure!"
 }
 
 function Download {
