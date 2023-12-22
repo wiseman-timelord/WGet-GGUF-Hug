@@ -1,7 +1,7 @@
 # WGet-LLM-Hug
 Status: Working(ish)
 <br> Updates for next release...
-- Testing of, resume and move to completed, functions needs to be done.
+- Testing of move to completed function needs to be done.
 - Improvements for UI layout in both, main script and setup-installer.
   
 ## Description
