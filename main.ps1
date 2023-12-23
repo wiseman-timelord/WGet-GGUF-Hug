@@ -5,7 +5,7 @@ $Host.UI.RawUI.BackgroundColor = 'Black'
 # Artwork
 function PrintHeader {
 	Clear-Host
-	Write-Host "`n=====================( " -NoNewline -ForegroundColor Cyan
+	Write-Host "`n====================( " -NoNewline -ForegroundColor Cyan
     Write-Host "WGetLmmHug-Psc" -NoNewline -ForegroundColor Yellow
     Write-Host " )======================`n" -ForegroundColor Cyan
 }
@@ -35,6 +35,22 @@ function Initialize-Folders {
     Create-Folder $global:completedFolder
 }
 
+function Perform-Maintenance {
+    Write-Host "`nFolder Maintenance Started..."
+    $directories = @($Script:downloadFolder, $Script:completedFolder)
+
+    foreach ($dir in $directories) {
+        $zeroByteFiles = Get-ChildItem -Path $dir -Recurse | Where-Object { $_.Length -eq 0 }
+        foreach ($file in $zeroByteFiles) {
+            Remove-Item $file.FullName -Force
+            Write-Host "...Deleted 0MB File: $($file.Name)." -ForegroundColor Red
+        }
+	Write-Host "...Folder Maintenance Complete."	
+    }
+}
+
+
+
 function Extract-Filename {
     param ([string]$url)
 
@@ -62,15 +78,23 @@ function Download {
         $completedPath = Join-Path $Script:completedFolder $filename
         $tempPath = Join-Path $Script:downloadFolder $filename
 
+        # Check if the file is already in the completed folder
         if (Test-Path $completedPath) { 
             Write-Host "Download Already Complete..."; 
             Write-Host "...Location Is: '.\Completed'.`n"; 
             return 
         }
-        if (Test-Path $tempPath) { 
-            Write-Host "Download, Complete And Misplaced..."; 
-            Write-Host "...Moved To '.\Completed'.`n";  
-            return 
+
+        # Check if the file exists in the download folder
+        $existingFile = Get-Item $tempPath -ErrorAction SilentlyContinue
+        if ($null -ne $existingFile) {
+            if ($existingFile.Length -eq 0) {
+                Write-Host "Deleting 0MB File: $filename" -ForegroundColor Yellow
+                Remove-Item $tempPath -Force
+            } elseif ($existingFile.Length -gt 1MB) {
+                Write-Host "Resuming Download for $filename" -ForegroundColor Cyan
+                # Add code to resume download if necessary
+            }
         }
 
         for ($i = 0; $i -lt $global:retryLimit; $i++) {
@@ -84,12 +108,13 @@ function Download {
                 if ($LASTEXITCODE -eq 0) {
                     if (Test-Path $tempPath) {
                         $fileInfo = Get-Item $tempPath
-                        if ($fileInfo.Length -ge 1MB) {
+                        if ($fileInfo.Length -gt 0) {
                             Move-Item $tempPath $Script:completedFolder -Force
                             Write-Host "File Download Success!" -ForegroundColor Green
                             return
                         } else {
-                            Write-Host "Incomplete Download..." -ForegroundColor Yellow
+                            Write-Host "Incomplete Download... 0MB File Found" -ForegroundColor Yellow
+                            Remove-Item $tempPath -Force
                         }
                     }
                 } else {
@@ -108,7 +133,7 @@ function Download {
         Write-Host "Retried $global:retryLimit Times..."
         Write-Host "...Re-Copy URL Try Again."
         Write-Host "Cleaning Up Temporary..."
-		Start-Sleep -Seconds 2
+        Start-Sleep -Seconds 2
 
         if (Test-Path $tempPath -and (Get-Item $tempPath).Length -eq 0) {
             Remove-Item $tempPath -Force
@@ -121,9 +146,6 @@ function Download {
         Write-Host "Error: $_" -ForegroundColor Red
     }
 }
-
-
-
 
 function Scan-Folders {
     PrintHeader
@@ -161,12 +183,33 @@ function Empty-Temp {
     Write-Host "...Temporary Folder Emptied.`n"
 }
 
+function Check-WGet {
+    PrintHeader
+    $wgetPath = ".\libraries\wget.exe"
+
+    if (Test-Path $wgetPath) {
+        # Replace 'path\to\sigcheck.exe' with the actual path to sigcheck.exe
+        $sigcheckOutput = & 'path\to\sigcheck.exe' -nobanner -a $wgetPath
+        $architecture = if ($sigcheckOutput -match '32-bit') { 'x32' } elseif ($sigcheckOutput -match '64-bit') { 'x64' } elseif ($sigcheckOutput -match 'ARM') { 'ARM' } else { 'Unknown' }
+        Write-Host "WGet Architecture: $architecture`n" -ForegroundColor Green
+    } else {
+        Write-Host "WGet executable not found at $wgetPath" -ForegroundColor Red
+    }
+
+    PrintSeparator
+    Write-Host "Enter 0 For Main Menu:"
+    while (($userChoice = Read-Host) -ne "0") {
+        Write-Host "Invalid choice. Please enter '0' to return to the main menu..." -ForegroundColor Red
+    }
+}
+
 function Show-Menu {
     Start-Sleep -Seconds 10 #-- 10 for debug & 2 for normal
 	Clear-Host
     PrintHeader
     Write-Host "                     1. Download A Model,"
     Write-Host "                     2. Scan Folders,`n"
+	Write-Host "                     3. Check WGet.exe,`n"
     Write-Host "                     0. Exit Program."
 	PrintSeparator
 }
@@ -174,15 +217,17 @@ function Show-Menu {
 function Main {
     Start-Script
     Initialize-Folders
-
+    Perform-Maintenance
+	
     do {
         Show-Menu
-        $choice = Read-Host "Enter Your Choice"
+        $choice = Read-Host "Enter Your Choice (1-0)"
 
         switch ($choice) {
             "0" { exit }
             "1" { Download }
             "2" { Scan-Folders }
+            "3" { Check-WGet }
             default { Write-Host "Invalid choice..." -ForegroundColor Red }
         }
     } while ($true)
