@@ -1,10 +1,9 @@
 # WGetLlmHug-Pc
 Status: Development (O_o/'
 <br> Work planned for next release...
+- Retry download works splendid, but the download function is now broken also.
 - Testing of download, to see if will move to completed folder.
-- Improvements for UI layout in Setup-installer.
-- Retry download needs testing.
-- Better display when downloading a model, what options are available, and how can we best visualize the information on a single download...make it epic
+- Better display when downloading a model, what options are available, and how can we best visualize the information on a single download...lets make it epic, even if it could potentially defeat some robustness, we want it to look COOL...
   
 ## Description
 WGetLlmHug-Pc is a PowerShell script complemented by Batch scripts, designed to simplify file downloads, specifically for, GGUF and GPTQ, HuggingFace model files, using the `wget` utility. It's tailored for users with limited internet access and older systems, supporting PowerShell 5 for Windows 7/8.1 compatibility, but also works on newer systems, either way for such purposes it is a, robust and optimised, tool.
