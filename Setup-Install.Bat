@@ -51,55 +51,64 @@ echo.
 echo \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 set /p choice=Enter your choice: 
 
-if "%choice%"=="1" goto x86
-if "%choice%"=="2" goto x64
-if "%choice%"=="3" goto arm64
+if "%choice%"=="1" (
+    set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe
+    set SIGCHECK_EXE=sigcheck.exe
+    goto prepare_download
+)
+if "%choice%"=="2" (
+    set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/64/wget.exe
+    set SIGCHECK_EXE=sigcheck64.exe
+    goto prepare_download
+)
+if "%choice%"=="3" (
+    set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/a64/wget.exe
+    set SIGCHECK_EXE=sigcheck64a.exe
+    goto prepare_download
+)
 if "%choice%"=="0" goto end
 echo Invalid choice. Try again.
 timeout /t 2 /nobreak >nul
 goto menu
 
-:x86
-set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe
-echo.
-echo x86 (32-Bit) Selected.
-goto prepare_download
-
-:x64
-set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/64/wget.exe
-echo.
-echo x64 (64-Bit) Selected.
-goto prepare_download
-
-:arm64
-set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/a64/wget.exe
-echo.
-echo x64a (ARM64) Selected.
-goto prepare_download
-
 :prepare_download
 echo.
-echo Preparing WGet Download ...
+echo Clearing Libraries...
+if exist ".\libraries\wget.exe" del ".\libraries\wget.exe"
+if exist ".\libraries\sigcheck.exe" del ".\libraries\sigcheck.exe"
+echo ...Libraries Emptied.
+echo.
+echo Downloading Libraries...
 timeout /t 1 /nobreak >nul
-if exist ".\libraries\wget.exe" (
-    echo Deleting Existing WGet...
-    del ".\libraries\wget.exe"
-)
-echo ...Preparation Is Complete.
-goto download
+goto download_wget
 
-:download
+:download_wget
+powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%WGET_URL%' -OutFile '.\libraries\wget.exe'; Invoke-WebRequest -Uri 'https://download.sysinternals.com/files/Sigcheck.zip' -OutFile '.\temporary\Sigcheck.zip' }"
+echo ...Downloading Finished.
 echo.
-echo Downloading Pre-Compiled WGet...
-powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%WGET_URL%' -OutFile '.\libraries\wget.exe' }"
-echo ...Download Process Finished.
+goto process_sigcheck
+
+:process_sigcheck
+echo Extracting and Preparing SigCheck...
+powershell -Command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('.\temporary\Sigcheck.zip', '.\temporary'); Move-Item -Path '.\temporary\%SIGCHECK_EXE%' -Destination '.\libraries\sigcheck.exe' }"
+del ".\temporary\Sigcheck.zip"
+del ".\temporary\sigcheck*.exe"
+echo ...SigCheck Preparation Complete.
 echo.
-echo Checking For Library...
+goto check_libraries
+
+:check_libraries
+echo Checking For Libraries...
 timeout /t 1 /nobreak >nul
 if exist ".\libraries\wget.exe" (
     echo ...WGet Install Success.
 ) else (
     echo ...WGet Install Failure.
+)
+if exist ".\libraries\sigcheck.exe" (
+    echo ...SigCheck Install Success.
+) else (
+    echo ...SigCheck Install Failure.
 )
 echo.
 timeout /t 2 /nobreak >nul
