@@ -35,6 +35,7 @@ function Initialize-Folders {
     Create-Folder $global:completedFolder
 }
 
+# Maintenance
 function Perform-Maintenance {
     Write-Host "`nFolder Maintenance Started..."
     $directories = @($Script:downloadFolder, $Script:completedFolder)
@@ -45,8 +46,8 @@ function Perform-Maintenance {
             Remove-Item $file.FullName -Force
             Write-Host "...Deleted 0MB File: $($file.Name)." -ForegroundColor Red
         }
-	Write-Host "...Folder Maintenance Complete."	
     }
+	Write-Host "...Folder Maintenance Complete."
 }
 
 
@@ -208,7 +209,7 @@ function Show-Menu {
 	Clear-Host
     PrintHeader
     Write-Host "                     1. Download A Model,"
-    Write-Host "                     2. Scan Folders,`n"
+    Write-Host "                     2. Scan Folders,"
 	Write-Host "                     3. Check WGet.exe,`n"
     Write-Host "                     0. Exit Program."
 	PrintSeparator
