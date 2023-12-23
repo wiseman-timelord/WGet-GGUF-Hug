@@ -27,7 +27,6 @@ function Create-Folder($path) {
 # Start script message
 function Start-Script {
     Write-Host "...WGetLlmHug-Pc Has Started!"
-    Start-Sleep -Seconds 2
 }
 
 # Initialize folders
@@ -64,19 +63,41 @@ function Download {
         $completedPath = Join-Path $Script:completedFolder $filename
         $tempPath = Join-Path $Script:downloadFolder $filename
 
-        if (Test-Path $completedPath) { Write-Host "Download Already Complete..."; Write-Host "...Location Is: '.\Completed'.`n"; return }
-        if (Test-Path $tempPath) { Move-Item $tempPath $Script:completedFolder -Force; Write-Host "Download, Complete And Misplaced..."; Write-Host "...Moved To '.\Completed'.`n"; Start-Sleep -Seconds 2; return }
+        if (Test-Path $completedPath) { 
+            Write-Host "Download Already Complete..."; 
+            Write-Host "...Location Is: '.\Completed'.`n"; 
+            return 
+        }
+        if (Test-Path $tempPath) { 
+            Move-Item $tempPath $Script:completedFolder -Force; 
+            Write-Host "Download, Complete And Misplaced..."; 
+            Write-Host "...Moved To '.\Completed'.`n"; 
+            Start-Sleep -Seconds 2; 
+            return 
+        }
 
         for ($i = 0; $i -lt $global:retryLimit; $i++) {
             Write-Host "Attempt $(($i + 1))"
             try {
                 Invoke-Expression ".\libraries\wget.exe -O `"$tempPath`" `"$url`""
-                if (Test-Path $tempPath) { Move-Item $tempPath $Script:completedFolder -Force; Write-Host "File Download Success!" -ForegroundColor Green; return }
-                Write-Host "Retrying Model Download..."
-            } catch { Write-Host "Error: $_" -ForegroundColor Red }
+                if (Test-Path $tempPath) { 
+                    Move-Item $tempPath $Script:completedFolder -Force; 
+                    Write-Host "File Download Success!" -ForegroundColor Green; 
+                    return 
+                }
+                Write-Host "...Download Attempt Failed." -ForegroundColor Red
+                Write-Host "Retrying In 2 Seconds..."
+                Start-Sleep -Seconds 2
+            } catch {
+                Write-Host "Error: $_" -ForegroundColor Red
+                Write-Host "Retrying In 2 Seconds..."
+                Start-Sleep -Seconds 2
+            }
         }
         Write-Host "Download Has Failed!"
-    } catch { Write-Host "Error: $_" -ForegroundColor Red }
+    } catch {
+        Write-Host "Error: $_" -ForegroundColor Red
+    }
 }
 
 function Scan-Folders {
@@ -99,29 +120,24 @@ function Scan-Folders {
         switch ($userChoice) {
             "e" { Empty-Temp }
             "0" { } # Do nothing, return to menu
-            default { Write-Host "Invalid choice. Try again." -ForegroundColor Red }
+            default { Write-Host "`nInvalid choice. Try again." -ForegroundColor Red }
         }
     } else {
         Write-Host "No files to delete. Enter '0' For Main Menu"
         while (($userChoice = Read-Host) -ne "0") {
-            Write-Host "Invalid choice. Press '0' To Return To Menu" -ForegroundColor Red
+            Write-Host "`nInvalid choice..." -ForegroundColor Red
         }
     }
 }
-
-
-
-
 
 function Empty-Temp {
     Write-Host "`nEmptying Temporary Folder..."
     Get-ChildItem -Path $Script:downloadFolder -Recurse | Remove-Item -Force
     Write-Host "...Temporary Folder Emptied.`n"
-    Start-Sleep -Seconds 2
 }
 
 function Show-Menu {
-    Start-Sleep -Seconds 10   #-- keep for debug
+    Start-Sleep -Seconds 2   #-- 10 for debug & 2 for normal
 	Clear-Host
     PrintHeader
     Write-Host "                     1. Download A Model,"
