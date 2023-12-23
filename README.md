@@ -1,11 +1,5 @@
 # WGetLlmHug-Pc
 Status: Development (O_o/'
-<br> Work done for current release...
-- If complete files in temporary for a new download, these are moved to completed folder. 
-- Misc fixes and upgrades
-- Complementing Optimizations
-- Improvements for UI layout in main script.
-
 <br> Work planned for next release...
 - Testing of download, to see if will move to completed folder.
 - Improvements for UI layout in Setup-installer.
