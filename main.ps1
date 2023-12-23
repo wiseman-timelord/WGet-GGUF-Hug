@@ -2,9 +2,22 @@
 $Host.UI.RawUI.ForegroundColor = 'Yellow'
 $Host.UI.RawUI.BackgroundColor = 'Black'
 
+# Artwork
+function PrintHeader {
+	Clear-Host
+	Write-Host "`n=====================( " -NoNewline -ForegroundColor Cyan
+    Write-Host "WGetLmmHug-Pc" -NoNewline -ForegroundColor Yellow
+    Write-Host " )======================`n" -ForegroundColor Cyan
+}
+
+function PrintSeparator {
+	Write-Host "`n`n\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/" -ForegroundColor Cyan
+}
+
 # Global variables
 $global:downloadFolder = ".\temporary"
 $global:completedFolder = ".\Completed"
+$global:retryLimit = 9
 
 # Create necessary folders
 function Create-Folder($path) {
@@ -13,7 +26,7 @@ function Create-Folder($path) {
 
 # Start script message
 function Start-Script {
-    Write-Host "...WGet-LLM-Hug Has Started!"
+    Write-Host "...WGetLlmHug-Pc Has Started!"
     Start-Sleep -Seconds 2
 }
 
@@ -42,87 +55,78 @@ function Extract-Filename {
             }
         }
     }
-
-    Write-Host "Unable to extract filename from the URL." -ForegroundColor Red
-    throw "Filename Extraction Failure!"
 }
 
 function Download {
-    Write-Host ""
-    $url = Read-Host "Enter Download URL"
-
+    $url = Read-Host "`nEnter Your URL"
     try {
         $filename = Extract-Filename -url $url
-        Write-Host "`nFilename Extracted: $filename"
+        $completedPath = Join-Path $Script:completedFolder $filename
+        $tempPath = Join-Path $Script:downloadFolder $filename
 
-        $completedFilename = Join-Path $Script:completedFolder $filename
-        $downloadPath = Join-Path $Script:downloadFolder $filename
+        if (Test-Path $completedPath) { Write-Host "Download Already Completed..."; return }
+        if (Test-Path $tempPath) { Move-Item $tempPath $Script:completedFolder -Force; Write-Host "...Moved To Completed."; Start-Sleep -Seconds 2; return }
 
-        if (Test-Path $completedFilename) {
-            Write-Host "Download of '$filename' already completed!"
-            Start-Sleep -Seconds 2
-        } else {
-            if (Test-Path $downloadPath) {
-                Write-Host "Resuming download of '$filename'..."
-            } else {
-                Write-Host "Downloading '$filename'..."
-            }
-
-            $downloadCommand = ".\libraries\wget.exe"
-            $arguments = "-c", "--no-check-certificate", "-O", "`"$($downloadPath)`"", "$($url)"
-
-            Write-Host "Command to execute: $downloadCommand"
-            Write-Host "Arguments: $($arguments -join ' ')"
-
-            Start-Process -FilePath $downloadCommand -ArgumentList $arguments -Wait -NoNewWindow -PassThru | Out-String
-
-            if ($LASTEXITCODE -eq 0) {
-                Write-Host "Download of '$filename' success." -ForegroundColor Green
-                Move-Item -Path $downloadPath -Destination $Script:completedFolder -Force
-                Write-Host "Moved to ${Script:completedFolder} successfully." 
-            } else {
-                Write-Host "Download of '$filename' failed." -ForegroundColor Red
-            }
+        for ($i = 0; $i -lt $global:retryLimit; $i++) {
+            Write-Host "Attempt $(($i + 1))"
+            try {
+                Invoke-Expression "wget.exe -O `"$tempPath`" `"$url`""
+                if (Test-Path $tempPath) { Move-Item $tempPath $Script:completedFolder -Force; Write-Host "File Download Success!" -ForegroundColor Green; return }
+                Write-Host "Retrying Model Download..."
+            } catch { Write-Host "Error: $_" -ForegroundColor Red }
         }
-    } catch {
-        Write-Host "Error: $_"
-        Start-Sleep -Seconds 2
-    }
+        Write-Host "Download Has Failed!"
+    } catch { Write-Host "Error: $_" -ForegroundColor Red }
 }
 
-
-
 function Scan-Folders {
-    Write-Host "Scanning Folders..."
+    PrintHeader
+    Write-Host "Results From Scanning..."
 
     function Scan-Directory($path, $folderName) {
         Write-Host "`n${folderName}:"
-        $files = Get-ChildItem -Path $path -Include "*.gguf", "*.gptq" -Recurse
-        if ($files.Count -eq 0) { Write-Host "No files in ${folderName}..." }
-        else { $files | ForEach-Object { Write-Host "$($_.Name)" } }
+        $files = Get-ChildItem -Path $path -Include "*.gguf", "*.gptq" -Recurse -ErrorAction SilentlyContinue
+        Write-Host ($files.Count -gt 0 ? ($files | ForEach-Object { $_.Name }) : "No files in $folderName...")
+        return $files
     }
 
-    Scan-Directory $Script:downloadFolder "temporary"
+    $tempFiles = Scan-Directory $Script:downloadFolder "temporary"
     Scan-Directory $Script:completedFolder "Completed"
-    Start-Sleep -Seconds 2
+    PrintSeparator
+
+    if ($tempFiles.Count -gt 0) {
+        $userChoice = Read-Host "Enter, E To Empty Temporary Or 0 For Main Menu"
+        switch ($userChoice) {
+            "e" { Empty-Temp }
+            "0" { } # Do nothing, return to menu
+            default { Write-Host "Invalid choice. Try again." -ForegroundColor Red }
+        }
+    } else {
+        Write-Host "No files to delete. Enter '0' For Main Menu"
+        while (($userChoice = Read-Host) -ne "0") {
+            Write-Host "Invalid choice. Press '0' To Return To Menu" -ForegroundColor Red
+        }
+    }
 }
+
+
+
+
 
 function Empty-Temp {
     Write-Host "`nEmptying Temporary Folder..."
     Get-ChildItem -Path $Script:downloadFolder -Recurse | Remove-Item -Force
     Write-Host "...Temporary Folder Emptied.`n"
-	Start-Sleep -Seconds 2
+    Start-Sleep -Seconds 2
 }
 
 function Show-Menu {
-	Start-Sleep -Seconds 10
     Clear-Host
-	Write-Host "======================( WGET-LLM-HUG )======================"
-    Write-Host "`n`n`n`n`n`n`n`n"
-    Write-Host "                  1) Enter New Url`n"
-    Write-Host "                  2) Scan Program Folders`n"
-    Write-Host "                  3) Empty Temp Folder`n"
-    Write-Host "                  0) Exit Program`n`n`n`n`n`n`n`n`n`n`n"
+    PrintHeader
+    Write-Host "                   1. Download A Model,"
+    Write-Host "                   2. Scan Folders,`n"
+    Write-Host "                   0. Exit Program."
+	PrintSeparator
 }
 
 function Main {
@@ -131,19 +135,15 @@ function Main {
 
     do {
         Show-Menu
-        $choice = Read-Host "Enter your choice"
+        $choice = Read-Host "Enter Your Choice"
 
         switch ($choice) {
-            "0" { 
-                exit # This will exit the script and return to the command prompt
-            }
+            "0" { exit }
             "1" { Download }
             "2" { Scan-Folders }
-            "3" { Empty-Temp }
-            default { Write-Host "Invalid choice. Try again." -ForegroundColor Red }
+            default { Write-Host "Invalid choice..." -ForegroundColor Red }
         }
     } while ($true)
 }
-
 
 Main
