@@ -43,7 +43,7 @@ echo ======================[ Setup-Install ]=====================
 echo.
 echo                       1. x86 (32-Bit),
 echo                       2. x64 (64-Bit),
-echo                       3. ARM64,
+echo                       3. x64a (ARM64),
 echo.
 echo                       0. Exit Program.
 echo.
@@ -56,22 +56,25 @@ if "%choice%"=="2" goto x64
 if "%choice%"=="3" goto arm64
 if "%choice%"=="0" goto end
 echo Invalid choice. Try again.
-pause
+timeout /t 2 /nobreak >nul
 goto menu
 
 :x86
 set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe
-echo Selected x86 (32-Bit)...
+echo.
+echo x86 (32-Bit) Selected.
 goto prepare_download
 
 :x64
 set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/64/wget.exe
-echo Selected x64 (64-Bit)...
+echo.
+echo x64 (64-Bit) Selected.
 goto prepare_download
 
 :arm64
 set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/a64/wget.exe
-echo Selected ARM64...
+echo.
+echo x64a (ARM64) Selected.
 goto prepare_download
 
 :prepare_download
@@ -91,7 +94,7 @@ echo Downloading Pre-Compiled WGet...
 powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%WGET_URL%' -OutFile '.\libraries\wget.exe' }"
 echo ...Download Process Finished.
 echo.
-echo Checking For Download...
+echo Checking For Library...
 timeout /t 1 /nobreak >nul
 if exist ".\libraries\wget.exe" (
     echo ...WGet Install Success.
