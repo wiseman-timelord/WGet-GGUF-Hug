@@ -11,10 +11,10 @@ timeout /t 1 /nobreak >nul
 :menu
 cls
 echo.
-echo =====================( WGetLlmHug-Pc )=====================
+echo =====================( WGetLlmHug-Psc )=====================
 echo.
 echo.
-echo                    1. Start WGetLlmHug-Pc,
+echo                    1. Start WGetLlmHug-Psc,
 echo.
 echo                    0. Exit Launcher.
 echo.

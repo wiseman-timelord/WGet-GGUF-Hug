@@ -6,7 +6,7 @@ $Host.UI.RawUI.BackgroundColor = 'Black'
 function PrintHeader {
 	Clear-Host
 	Write-Host "`n=====================( " -NoNewline -ForegroundColor Cyan
-    Write-Host "WGetLmmHug-Pc" -NoNewline -ForegroundColor Yellow
+    Write-Host "WGetLmmHug-Psc" -NoNewline -ForegroundColor Yellow
     Write-Host " )======================`n" -ForegroundColor Cyan
 }
 
@@ -26,7 +26,7 @@ function Create-Folder($path) {
 
 # Start script message
 function Start-Script {
-    Write-Host "...WGetLlmHug-Pc Has Started!"
+    Write-Host "...WGetLlmHug-Psc Has Started!"
 }
 
 # Initialize folders
@@ -49,7 +49,6 @@ function Extract-Filename {
                 $startIndex = $percentIndex + 3
                 $filename = $url.Substring($startIndex, $index - $startIndex + 5)
                 Write-Host "`nFilename Extracted: $filename`n" -ForegroundColor Green
-                Start-Sleep -Seconds 2
                 return $filename
             }
         }
@@ -69,23 +68,34 @@ function Download {
             return 
         }
         if (Test-Path $tempPath) { 
-            Move-Item $tempPath $Script:completedFolder -Force; 
             Write-Host "Download, Complete And Misplaced..."; 
-            Write-Host "...Moved To '.\Completed'.`n"; 
-            Start-Sleep -Seconds 2; 
+            Write-Host "...Moved To '.\Completed'.`n";  
             return 
         }
 
         for ($i = 0; $i -lt $global:retryLimit; $i++) {
             Write-Host "Attempt $(($i + 1))"
             try {
-                Invoke-Expression ".\libraries\wget.exe -O `"$tempPath`" `"$url`""
-                if (Test-Path $tempPath) { 
-                    Move-Item $tempPath $Script:completedFolder -Force; 
-                    Write-Host "File Download Success!" -ForegroundColor Green; 
-                    return 
+                $downloadCommand = ".\libraries\wget.exe"
+                $arguments = "-c", "--no-check-certificate", "-O", "`"$tempPath`"", "`"$url`""
+
+                Start-Process -FilePath $downloadCommand -ArgumentList $arguments -Wait -NoNewWindow -PassThru | Out-String
+
+                if ($LASTEXITCODE -eq 0) {
+                    if (Test-Path $tempPath) {
+                        $fileInfo = Get-Item $tempPath
+                        if ($fileInfo.Length -ge 1MB) {
+                            Move-Item $tempPath $Script:completedFolder -Force
+                            Write-Host "File Download Success!" -ForegroundColor Green
+                            return
+                        } else {
+                            Write-Host "Incomplete Download..." -ForegroundColor Yellow
+                        }
+                    }
+                } else {
+                    Write-Host "...Download Attempt Failed." -ForegroundColor Red
                 }
-                Write-Host "...Download Attempt Failed." -ForegroundColor Red
+
                 Write-Host "Retrying In 2 Seconds..."
                 Start-Sleep -Seconds 2
             } catch {
@@ -94,11 +104,26 @@ function Download {
                 Start-Sleep -Seconds 2
             }
         }
-        Write-Host "Download Has Failed!"
+
+        Write-Host "Retried $global:retryLimit Times..."
+        Write-Host "...Re-Copy URL Try Again."
+        Write-Host "Cleaning Up Temporary..."
+		Start-Sleep -Seconds 2
+
+        if (Test-Path $tempPath -and (Get-Item $tempPath).Length -eq 0) {
+            Remove-Item $tempPath -Force
+            Write-Host "...0MB File Deleted."
+        } else {
+            Write-Host "...No File Present."
+        }
+
     } catch {
         Write-Host "Error: $_" -ForegroundColor Red
     }
 }
+
+
+
 
 function Scan-Folders {
     PrintHeader
@@ -137,7 +162,7 @@ function Empty-Temp {
 }
 
 function Show-Menu {
-    Start-Sleep -Seconds 2   #-- 10 for debug & 2 for normal
+    Start-Sleep -Seconds 10 #-- 10 for debug & 2 for normal
 	Clear-Host
     PrintHeader
     Write-Host "                     1. Download A Model,"
@@ -164,3 +189,6 @@ function Main {
 }
 
 Main
+
+
+
