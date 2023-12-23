@@ -1,8 +1,9 @@
 # WGet-LLM-Hug
-Status: Working(ish)
+Status: Development (O_o/'
 <br> Updates for next release...
 - Testing of move to completed function needs to be done.
 - Improvements for UI layout in both, main script and setup-installer.
+- Retry download, if 9 times repeating fail, then produce detailed report on, why fail and current file status, and predicted time till download finished (re-use such information from recent printed output from wget library) and then pause before returning to main menu.  
   
 ## Description
 WGet-LLM-Hug is a PowerShell script complemented by Batch scripts, designed to simplify file downloads, specifically for, GGUF and GPTQ, HuggingFace model files, using the `wget` utility. It's tailored for users with limited internet access and older systems, supporting PowerShell 5 for Windows 7/8.1 compatibility, but also works on newer systems, either way for such purposes it is a, robust and optimised, tool.
