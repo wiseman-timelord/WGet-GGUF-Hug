@@ -49,7 +49,7 @@ function Extract-Filename {
             if ($percentIndex -ge 0) {
                 $startIndex = $percentIndex + 3
                 $filename = $url.Substring($startIndex, $index - $startIndex + 5)
-                Write-Host "`nFilename Extracted: $filename" -ForegroundColor Green
+                Write-Host "`nFilename Extracted: $filename`n" -ForegroundColor Green
                 Start-Sleep -Seconds 2
                 return $filename
             }
@@ -64,8 +64,8 @@ function Download {
         $completedPath = Join-Path $Script:completedFolder $filename
         $tempPath = Join-Path $Script:downloadFolder $filename
 
-        if (Test-Path $completedPath) { Write-Host "Download Already Completed..."; return }
-        if (Test-Path $tempPath) { Move-Item $tempPath $Script:completedFolder -Force; Write-Host "...Moved To Completed."; Start-Sleep -Seconds 2; return }
+        if (Test-Path $completedPath) { Write-Host "Download Already Complete..."; Write-Host "...Location Is: '.\Completed'.`n"; return }
+        if (Test-Path $tempPath) { Move-Item $tempPath $Script:completedFolder -Force; Write-Host "Download, Complete And Misplaced..."; Write-Host "...Moved To '.\Completed'.`n"; Start-Sleep -Seconds 2; return }
 
         for ($i = 0; $i -lt $global:retryLimit; $i++) {
             Write-Host "Attempt $(($i + 1))"
@@ -123,9 +123,9 @@ function Empty-Temp {
 function Show-Menu {
     Clear-Host
     PrintHeader
-    Write-Host "                   1. Download A Model,"
-    Write-Host "                   2. Scan Folders,`n"
-    Write-Host "                   0. Exit Program."
+    Write-Host "                     1. Download A Model,"
+    Write-Host "                     2. Scan Folders,`n"
+    Write-Host "                     0. Exit Program."
 	PrintSeparator
 }
 
