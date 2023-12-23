@@ -70,7 +70,7 @@ function Download {
         for ($i = 0; $i -lt $global:retryLimit; $i++) {
             Write-Host "Attempt $(($i + 1))"
             try {
-                Invoke-Expression "wget.exe -O `"$tempPath`" `"$url`""
+                Invoke-Expression ".\libraries\wget.exe -O `"$tempPath`" `"$url`""
                 if (Test-Path $tempPath) { Move-Item $tempPath $Script:completedFolder -Force; Write-Host "File Download Success!" -ForegroundColor Green; return }
                 Write-Host "Retrying Model Download..."
             } catch { Write-Host "Error: $_" -ForegroundColor Red }
@@ -121,7 +121,8 @@ function Empty-Temp {
 }
 
 function Show-Menu {
-    Clear-Host
+    Start-Sleep -Seconds 10   #-- keep for debug
+	Clear-Host
     PrintHeader
     Write-Host "                     1. Download A Model,"
     Write-Host "                     2. Scan Folders,`n"
