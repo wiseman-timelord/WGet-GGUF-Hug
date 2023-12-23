@@ -1,4 +1,4 @@
-# WGetLlmHug-Pc
+# WGetLlmHug-Psc
 Status: Development (O_o/'
 <br> Work planned for next release...
 - Retry download works splendid, but the download function is now broken also.
@@ -6,7 +6,7 @@ Status: Development (O_o/'
 - Better display when downloading a model, what options are available, and how can we best visualize the information on a single download...lets make it epic, even if it could potentially defeat some robustness, we want it to look COOL...
   
 ## Description
-WGetLlmHug-Pc is a PowerShell script complemented by Batch scripts, designed to simplify file downloads, specifically for, GGUF and GPTQ, HuggingFace model files, using the `wget` utility. It's tailored for users with limited internet access and older systems, supporting PowerShell 5 for Windows 7/8.1 compatibility, but also works on newer systems, either way for such purposes it is a, robust and optimised, tool.
+WGetLlmHug-Psc is a PowerShell script complemented by Batch scripts, designed to simplify file downloads, specifically for, GGUF and GPTQ, HuggingFace model files, using the `wget` utility. It's tailored for users with limited internet access and older systems, supporting PowerShell 5 for Windows 7/8.1 compatibility, but also works on newer systems, either way for such purposes it is a, robust and optimised, tool.
 
 ## Features:
 - **Complex URL Reading**: Extracts filenames from HuggingFace URLs containing ".gguf" and ".gptq".
@@ -19,7 +19,7 @@ WGetLlmHug-Pc is a PowerShell script complemented by Batch scripts, designed to 
 ## Interface:
 ```
 
-=====================( WGetLmmHug-Pc )======================
+=====================( WGetLmmHug-Psc )======================
 
 
                    1. Download A Model,
@@ -83,10 +83,10 @@ emporary/quant  38%[>    ]   2.77G  1.49MB/s    eta 58m 57s
 ```
 
 ## Usage
-1. Copy WGetLlmHug-Pc to its own folder, then run `Setup-Install.Bat`, this sets up, `wget.exe` and folders.
+1. Copy WGetLlmHug-Psc to its own folder, then run `Setup-Install.Bat`, this sets up, `wget.exe` and folders.
 2. Create folder for model to download to, and put in it, config.json and the readme.md, from HuggingFace.
 3. Partially download the model file, then cancel the download and copy the link it gave (it must be done like this).
-4. Run `WGetLlmHug-Pc.Bat`, select `Enter URL`from the menu, and paste the link, it will now download. 
+4. Run `WGetLlmHug-Psc.Bat`, select `Enter URL`from the menu, and paste the link, it will now download. 
 5. When download is finished then move it from `.\Completed` to the model folder you made.
 
 ## Requirements
@@ -97,7 +97,7 @@ emporary/quant  38%[>    ]   2.77G  1.49MB/s    eta 58m 57s
 - URL linked to a file with ".gguf" or ".gptq" format.
 
 ## Note
-WGetLlmHug-Pc is a simplified concept compared to "Downlord", WGetLlmHug-Pc is focused on language models, where as Downlord is intended as a more general purpose downloader.
+WGetLlmHug-Psc is a simplified concept compared to "Downlord", WGetLlmHug-Psc is focused on language models, where as Downlord is intended as a more general purpose downloader.
 
 ## Disclaimer
 This program is provided "as is" without warranties or support. Users are responsible for the content they, download and use, as well as, any resulting damage to, hardware or sanity.
