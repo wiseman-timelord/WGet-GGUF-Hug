@@ -18,7 +18,19 @@ WGetLlmHug-Pc is a PowerShell script complemented by Batch scripts, designed to 
 
 ## Interface:
 ```
-======================( WGET-LLM-HUG )======================
+
+=====================( WGetLmmHug-Pc )======================
+
+
+                   1. Download A Model,
+                   2. Scan Folders,
+
+                   0. Exit Program.
+
+
+\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+
+Enter Your Choice:
 
 
 
@@ -29,25 +41,11 @@ WGetLlmHug-Pc is a PowerShell script complemented by Batch scripts, designed to 
 
 
 
-                  1) Enter New Url
-
-                  2) Scan Program Folders
-
-                  3) Empty Temp Folder
-
-                  0) Exit Program
 
 
 
 
 
-
-
-
-
-
-
-Enter your choice:
 
 ```
 ```
