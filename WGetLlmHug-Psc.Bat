@@ -1,7 +1,7 @@
 @echo off
 
 :: Initialization
-mode con cols=60 lines=30
+mode con cols=60 lines=85
 color 0E
 title WGetLlmHug-Psc Launcher
 echo.
@@ -11,11 +11,10 @@ echo Launcher Script Started...
 timeout /t 2 /nobreak >nul
 cls
 echo.
-echo =====================( WGetLlmHug-Psc )=====================
+echo ====================( WGetLlmHug-Psc )======================
 echo.
 echo                   1. Start WGetLlmHug-Psc,
 echo                   2. Check File Structure,
-echo.
 echo                      0. Exit Launcher.
 echo.
 set /p choice=Select, Options '1-2' or '0' To Exit : 
