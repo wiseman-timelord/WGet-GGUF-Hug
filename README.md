@@ -4,7 +4,16 @@ Status: Development (O_o/'
 - Retry download works splendid, but the download function is now broken also.
 - Testing of download, to see if will move to completed folder.
 - Better display when downloading a model, what options are available, and how can we best visualize the information on a single download...lets make it epic, even if it could potentially defeat some robustness, we want it to look COOL...
-  
+Work done for next release...
+- If complete files in temporary for a new download, these are moved to completed folder.
+- Misc fixes and upgrades
+- Complementing Optimizations
+- Improvements for UI layout in main script.
+- All scripts now have same visual themes
+- Implementation of SigCheck library, to check the WGet is the correct WGet (this may be removed later).
+- Retry code re-implemented.
+- Setup upgraded to perfection.
+
 ## Description
 WGetLlmHug-Psc is a PowerShell script complemented by Batch scripts, designed to simplify file downloads, specifically for, GGUF and GPTQ, HuggingFace model files, using the `wget` utility. It's tailored for users with limited internet access and older systems, supporting PowerShell 5 for Windows 7/8.1 compatibility, but also works on newer systems, either way for such purposes it is a, robust and optimised, tool.
 
