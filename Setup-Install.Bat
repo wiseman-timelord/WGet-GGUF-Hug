@@ -19,7 +19,7 @@ echo                        3. x64a (ARM64),
 echo.
 echo                       0. Exit Installer.
 echo.
-set /p choice=Select CPU Architecture: 
+set /p choice=Select, CPU Architecture '1-3' or '0' To Exit: 
 
 if "%choice%"=="1" (
     set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe
