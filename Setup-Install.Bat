@@ -16,7 +16,6 @@ echo.
 echo                        1. x86 (32-Bit),
 echo                        2. x64 (64-Bit),
 echo                        3. x64a (ARM64),
-echo.
 echo                       0. Exit Installer.
 echo.
 set /p choice=Select, Architecture '1-3' or '0' To Exit: 
