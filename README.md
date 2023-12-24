@@ -101,7 +101,7 @@ emporary/quant  38%[>    ]   2.77G  1.49MB/s    eta 58m 57s
 ## Requirements
 - Windows 7/8.1/10/11
 - Processor x32/x64/x64a
-- PowerShellCore (get the `.msi` from [Here](https://mirrors.sdu.edu.cn/github-release/1700313102/github-release/PowerShell_PowerShell/v7.4.0/).
+- PowerShellCore (get the `.msi` from [Here](https://mirrors.sdu.edu.cn/github-release/1700313102/github-release/PowerShell_PowerShell/v7.4.0/)).
 - Internet connection.
 - Some libraries installed through "Setup-Install.Bat".
 - URL linked to a file with ".gguf" or ".gptq" format.
