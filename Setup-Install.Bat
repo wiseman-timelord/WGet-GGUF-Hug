@@ -11,9 +11,7 @@ echo Setup-Installer Initiated...
 timeout /t 2 /nobreak >nul
 cls
 echo.
-echo ======================[ Setup-Install ]=====================
-echo.
-echo                    Select CPU Architecture
+echo ======================[ Setup-Install ]=====================        
 echo.
 echo                        1. x86 (32-Bit),
 echo                        2. x64 (64-Bit),
@@ -21,7 +19,7 @@ echo                        3. x64a (ARM64),
 echo.
 echo                       0. Exit Installer.
 echo.
-set /p choice=Enter your choice: 
+set /p choice=Select CPU Architecture: 
 
 if "%choice%"=="1" (
     set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe
