@@ -191,13 +191,13 @@ function Check-WGet {
 }
 
 function Show-Menu {
-    Start-Sleep -Seconds 10 #-- 10 for debug & 2 for normal
+    Start-Sleep -Seconds 2 #-- 10 for debug & 2 for normal
 	Clear-Host
     PrintHeader
     Write-Host "                   1. Download A Model,"
-    Write-Host "                   2. Scan Folders,"
+    Write-Host "                     2. Scan Folders,"
 	Write-Host "                   3. Analyse WGet.Exe,`n"
-    Write-Host "                   0. Exit Program.`n"
+    Write-Host "                     0. Exit Program.`n"
 }
 
 function Main {
