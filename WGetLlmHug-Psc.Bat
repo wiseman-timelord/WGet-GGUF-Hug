@@ -50,12 +50,6 @@ if exist ".\libraries\wget.exe" (
     echo ...WGet Library Missing.
     set missing=1
 )
-if exist ".\libraries\sigcheck.exe" (
-    echo ...SigCheck Library Present.
-) else (
-    echo ...SigCheck Library Missing.
-    set missing=1
-)
 echo.
 echo Checking Program Folders...
 timeout /t 1 /nobreak >nul

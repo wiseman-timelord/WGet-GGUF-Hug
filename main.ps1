@@ -169,34 +169,12 @@ function Empty-Temp {
     Write-Host "...Cache Folder Emptied.`n"
 }
 
-function Check-WGet {
-    PrintHeader
-    $wgetPath = Join-Path $global:librariesFolder "wget.exe"
-
-    if (Test-Path $wgetPath) {
-        $sigcheckOutput = & (Join-Path $global:librariesFolder "sigcheck.exe") -nobanner -a $wgetPath
-        $architecture = if ($sigcheckOutput -match '32-bit') { 'x32' } 
-                        elseif ($sigcheckOutput -match '64-bit') { 'x64' } 
-                        elseif ($sigcheckOutput -match 'ARM') { 'ARM' } 
-                        else { 'Unknown' }
-        Write-Host "WGet Architecture: $architecture`n" -ForegroundColor Green
-    } else {
-        Write-Host "WGet executable not found at $wgetPath" -ForegroundColor Red
-    }
-
-    Write-Host " Select '0' For Menu: "
-    while (($userChoice = Read-Host) -ne "0") {
-        Write-Host "Invalid choice." -ForegroundColor Red
-    }
-}
-
 function Show-Menu {
     Start-Sleep -Seconds 2 #-- 10 for debug & 2 for normal
 	Clear-Host
     PrintHeader
     Write-Host "                   1. Download A Model,"
     Write-Host "                     2. Scan Folders,"
-	Write-Host "                   3. Analyse WGet.Exe,`n"
     Write-Host "                     0. Exit Program.`n"
 }
 
@@ -206,13 +184,12 @@ function Main {
 	
     do {
         Show-Menu
-        $choice = Read-Host "Select, Options '1-3' Or '0' To Exit"
+        $choice = Read-Host "Select, Options '1-2' Or '0' To Exit"
 
         switch ($choice) {
             "0" { exit }
             "1" { Download }
             "2" { Scan-Folders }
-            "3" { Check-WGet }
             default { Write-Host "Invalid choice..." -ForegroundColor Red }
         }
     } while ($true)
