@@ -6,49 +6,21 @@ color 0E
 title Setup-Install Launcher
 echo.
 echo Setup-Installer Initiated...
-timeout /t 1 /nobreak >nul
-
-:: Create necessary folders
-cls
-echo.
-echo ======================[ Setup-Install ]=====================
-echo.
-echo Checking Program Folders...
-timeout /t 1 /nobreak >nul
-if not exist ".\libraries" (
-    echo Creating .\libraries folder...
-    mkdir ".\libraries"
-) else (
-    echo ...libraries folder exists.
-)
-if not exist ".\temporary" (
-    echo Creating .\temporary folder...
-    mkdir ".\temporary"
-) else (
-    echo ...temporary folder exists.
-)
-if not exist ".\Completed" (
-    echo Creating .\Completed folder...
-    mkdir ".\Completed"
-) else (
-    echo ...Completed folder exists.
-)
-echo ...Folder Setup Complete.
-timeout /t 3 /nobreak >nul
 
 :menu
+timeout /t 2 /nobreak >nul
 cls
 echo.
 echo ======================[ Setup-Install ]=====================
 echo.
-echo                       1. x86 (32-Bit),
-echo                       2. x64 (64-Bit),
-echo                       3. x64a (ARM64),
+echo                    Select CPU Architecture
 echo.
-echo                       0. Exit Program.
+echo                        1. x86 (32-Bit),
+echo                        2. x64 (64-Bit),
+echo                        3. x64a (ARM64),
 echo.
+echo                       0. Exit Installer.
 echo.
-echo \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 set /p choice=Enter your choice: 
 
 if "%choice%"=="1" (
@@ -67,39 +39,90 @@ if "%choice%"=="3" (
     goto prepare_download
 )
 if "%choice%"=="0" goto end
+echo.
 echo Invalid choice. Try again.
-timeout /t 2 /nobreak >nul
 goto menu
 
 :prepare_download
 echo.
+echo.
+echo Checking Program Folders...
+timeout /t 1 /nobreak >nul
+if not exist ".\libraries" (
+    echo Creating .\libraries folder...
+    mkdir ".\libraries"
+    echo ...Libraries Folder Created.
+)
+if not exist ".\temporary" (
+    echo Creating .\temporary folder...
+    mkdir ".\temporary"
+    echo ...Temporary Folder Created.
+)
+if not exist ".\Completed" (
+    echo Creating .\Completed folder...
+    mkdir ".\Completed"
+    echo ...Completed Folder Created.
+)
+echo ...Folders Setup Complete.
+timeout /t 2 /nobreak >nul
+echo.
 echo Clearing Libraries...
-if exist ".\libraries\wget.exe" del ".\libraries\wget.exe"
-if exist ".\libraries\sigcheck.exe" del ".\libraries\sigcheck.exe"
+if exist ".\libraries\*.exe" del ".\libraries\*.exe"
 echo ...Libraries Emptied.
 echo.
-echo Downloading Libraries...
 timeout /t 1 /nobreak >nul
-goto download_wget
-
-:download_wget
-powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%WGET_URL%' -OutFile '.\libraries\wget.exe'; Invoke-WebRequest -Uri 'https://download.sysinternals.com/files/Sigcheck.zip' -OutFile '.\temporary\Sigcheck.zip' }"
-echo ...Downloading Finished.
+echo Clearing Temporary...
+if exist ".\temporary\*.txt" del ".\temporary\*.txt"
+if exist ".\temporary\*.exe" del ".\temporary\*.exe"
+if exist ".\temporary\*.zip" del ".\temporary\*.zip"
+echo ...Temporary Emptied.
 echo.
-goto process_sigcheck
+goto download_files
+
+:download_files
+echo Downloading WGet...
+timeout /t 1 /nobreak >nul
+powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%WGET_URL%' -OutFile '.\libraries\wget.exe' }"
+echo WGet Download Finished.
+echo.
+timeout /t 1 /nobreak >nul
+echo Downloading SigCheck...
+powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://download.sysinternals.com/files/Sigcheck.zip' -OutFile '.\temporary\Sigcheck.zip' }"
+echo SigCheck Download Finished.
+echo.
 
 :process_sigcheck
+timeout /t 1 /nobreak >nul
 echo Extracting and Preparing SigCheck...
-powershell -Command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('.\temporary\Sigcheck.zip', '.\temporary'); Move-Item -Path '.\temporary\%SIGCHECK_EXE%' -Destination '.\libraries\sigcheck.exe' }"
-del ".\temporary\Sigcheck.zip"
-del ".\temporary\sigcheck*.exe"
-echo ...SigCheck Preparation Complete.
+if exist ".\temporary\Sigcheck.zip" (
+    powershell -Command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('.\temporary\Sigcheck.zip', '.\temporary'); Move-Item -Path '.\temporary\%SIGCHECK_EXE%' -Destination '.\libraries\sigcheck.exe' }"
+    echo ...SigCheck Preparation Complete.
+) else (
+    echo ...Extracting SigCheck Failed.
+)
+timeout /t 1 /nobreak >nul
+echo.
+
+:cleanup_process
+timeout /t 1 /nobreak >nul
+echo ...Deleting Temporary Files...
+if exist ".\temporary\*.txt" del ".\temporary\*.txt"
+if exist ".\temporary\*.exe" del ".\temporary\*.exe"
+if exist ".\temporary\*.zip" del ".\temporary\*.zip"
+echo ...Temporary Files Deleted.
 echo.
 goto check_libraries
 
 :check_libraries
+timeout /t 2 /nobreak >nul
+cls
+echo.
+echo ======================[ Setup-Install ]=====================
+echo.
 echo Checking For Libraries...
-timeout /t 1 /nobreak >nul
+echo.
+dir .\libraries
+echo.
 if exist ".\libraries\wget.exe" (
     echo ...WGet Install Success.
 ) else (
@@ -116,6 +139,6 @@ goto end
 
 :end
 echo.
-echo ...Setup-Install Processes Complete!
+echo ...Setup-Install Processes Completed!
 echo.
 pause
