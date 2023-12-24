@@ -2,37 +2,24 @@
 $Host.UI.RawUI.ForegroundColor = 'Yellow'
 $Host.UI.RawUI.BackgroundColor = 'Black'
 
-# Artwork
-function PrintHeader {
-	Clear-Host
-	Write-Host "`n====================( " -NoNewline -ForegroundColor Cyan
-    Write-Host "WGetLmmHug-Psc" -NoNewline -ForegroundColor Yellow
-    Write-Host " )======================`n" -ForegroundColor Cyan
-}
-
-function PrintSeparator {
-	Write-Host "`n`n\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/" -ForegroundColor Cyan
-}
-
 # Global variables
-$global:downloadFolder = ".\temporary"
+$global:downloadFolder = ".\cache"
 $global:completedFolder = ".\Completed"
+$global:librariesFolder = ".\libraries"
 $global:retryLimit = 9
 
-# Create necessary folders
-function Create-Folder($path) {
-    $null = New-Item -ItemType Directory -Force -Path $path
-}
 
 # Start script message
 function Start-Script {
     Write-Host "...WGetLlmHug-Psc Has Started!"
 }
 
-# Initialize folders
-function Initialize-Folders {
-    Create-Folder $global:downloadFolder
-    Create-Folder $global:completedFolder
+# Artwork
+function PrintHeader {
+	Clear-Host
+	Write-Host "`n====================( " -NoNewline -ForegroundColor Cyan
+    Write-Host "WGetLmmHug-Psc" -NoNewline -ForegroundColor Yellow
+    Write-Host " )======================`n" -ForegroundColor Cyan
 }
 
 # Maintenance
@@ -76,17 +63,16 @@ function Download {
     $url = Read-Host "`nEnter Your URL"
     try {
         $filename = Extract-Filename -url $url
-        $completedPath = Join-Path $Script:completedFolder $filename
-        $tempPath = Join-Path $Script:downloadFolder $filename
+        $completedPath = Join-Path $global:completedFolder $filename
+        $tempPath = Join-Path $global:downloadFolder $filename
 
-        # Check if the file is already in the completed folder
         if (Test-Path $completedPath) { 
             Write-Host "Download Already Complete..."; 
             Write-Host "...Location Is: '.\Completed'.`n"; 
             return 
         }
 
-        # Check if the file exists in the download folder
+        $resumeDownload = $false
         $existingFile = Get-Item $tempPath -ErrorAction SilentlyContinue
         if ($null -ne $existingFile) {
             if ($existingFile.Length -eq 0) {
@@ -94,7 +80,7 @@ function Download {
                 Remove-Item $tempPath -Force
             } elseif ($existingFile.Length -gt 1MB) {
                 Write-Host "Resuming Download for $filename" -ForegroundColor Cyan
-                # Add code to resume download if necessary
+                $resumeDownload = $true
             }
         }
 
@@ -102,7 +88,7 @@ function Download {
             Write-Host "Attempt $(($i + 1))"
             try {
                 $downloadCommand = ".\libraries\wget.exe"
-                $arguments = "-c", "--no-check-certificate", "-O", "`"$tempPath`"", "`"$url`""
+                $arguments = if ($resumeDownload) { "-c" } else { "" }, "--no-check-certificate", "-O", $tempPath, $url
 
                 Start-Process -FilePath $downloadCommand -ArgumentList $arguments -Wait -NoNewWindow -PassThru | Out-String
 
@@ -133,7 +119,7 @@ function Download {
 
         Write-Host "Retried $global:retryLimit Times..."
         Write-Host "...Re-Copy URL Try Again."
-        Write-Host "Cleaning Up Temporary..."
+        Write-Host "Cleaning Up Cache..."
         Start-Sleep -Seconds 2
 
         if (Test-Path $tempPath -and (Get-Item $tempPath).Length -eq 0) {
@@ -159,19 +145,18 @@ function Scan-Folders {
         return $files
     }
 
-    $tempFiles = Scan-Directory $Script:downloadFolder "temporary"
+    $tempFiles = Scan-Directory $Script:downloadFolder "cache"
     Scan-Directory $Script:completedFolder "Completed"
-    PrintSeparator
 
     if ($tempFiles.Count -gt 0) {
-        $userChoice = Read-Host "Enter, E To Empty Temporary Or 0 For Main Menu"
+        $userChoice = Read-Host "Select, 'E' To Empty Cache Or '0' For Menu: "
         switch ($userChoice) {
             "e" { Empty-Temp }
             "0" { } # Do nothing, return to menu
             default { Write-Host "`nInvalid choice. Try again." -ForegroundColor Red }
         }
     } else {
-        Write-Host "No files to delete. Enter '0' For Main Menu"
+        Write-Host "`n`nCache Empty, Select '0' For Menu: "
         while (($userChoice = Read-Host) -ne "0") {
             Write-Host "`nInvalid choice..." -ForegroundColor Red
         }
@@ -179,28 +164,29 @@ function Scan-Folders {
 }
 
 function Empty-Temp {
-    Write-Host "`nEmptying Temporary Folder..."
+    Write-Host "`nEmptying Cache Folder..."
     Get-ChildItem -Path $Script:downloadFolder -Recurse | Remove-Item -Force
-    Write-Host "...Temporary Folder Emptied.`n"
+    Write-Host "...Cache Folder Emptied.`n"
 }
 
 function Check-WGet {
     PrintHeader
-    $wgetPath = ".\libraries\wget.exe"
+    $wgetPath = Join-Path $global:librariesFolder "wget.exe"
 
     if (Test-Path $wgetPath) {
-        # Replace 'path\to\sigcheck.exe' with the actual path to sigcheck.exe
-        $sigcheckOutput = & 'path\to\sigcheck.exe' -nobanner -a $wgetPath
-        $architecture = if ($sigcheckOutput -match '32-bit') { 'x32' } elseif ($sigcheckOutput -match '64-bit') { 'x64' } elseif ($sigcheckOutput -match 'ARM') { 'ARM' } else { 'Unknown' }
+        $sigcheckOutput = & (Join-Path $global:librariesFolder "sigcheck.exe") -nobanner -a $wgetPath
+        $architecture = if ($sigcheckOutput -match '32-bit') { 'x32' } 
+                        elseif ($sigcheckOutput -match '64-bit') { 'x64' } 
+                        elseif ($sigcheckOutput -match 'ARM') { 'ARM' } 
+                        else { 'Unknown' }
         Write-Host "WGet Architecture: $architecture`n" -ForegroundColor Green
     } else {
         Write-Host "WGet executable not found at $wgetPath" -ForegroundColor Red
     }
 
-    PrintSeparator
-    Write-Host "Enter 0 For Main Menu:"
+    Write-Host " Select '0' For Menu: "
     while (($userChoice = Read-Host) -ne "0") {
-        Write-Host "Invalid choice. Please enter '0' to return to the main menu..." -ForegroundColor Red
+        Write-Host "Invalid choice." -ForegroundColor Red
     }
 }
 
@@ -208,21 +194,19 @@ function Show-Menu {
     Start-Sleep -Seconds 10 #-- 10 for debug & 2 for normal
 	Clear-Host
     PrintHeader
-    Write-Host "                     1. Download A Model,"
-    Write-Host "                     2. Scan Folders,"
-	Write-Host "                     3. Check WGet.exe,`n"
-    Write-Host "                     0. Exit Program."
-	PrintSeparator
+    Write-Host "                   1. Download A Model,"
+    Write-Host "                   2. Scan Folders,"
+	Write-Host "                   3. Analyse WGet.Exe,`n"
+    Write-Host "                   0. Exit Program.`n"
 }
 
 function Main {
     Start-Script
-    Initialize-Folders
     Perform-Maintenance
 	
     do {
         Show-Menu
-        $choice = Read-Host "Enter Your Choice (1-0)"
+        $choice = Read-Host "Select, Options '1-3' Or '0' To Exit"
 
         switch ($choice) {
             "0" { exit }
@@ -235,6 +219,5 @@ function Main {
 }
 
 Main
-
 
 

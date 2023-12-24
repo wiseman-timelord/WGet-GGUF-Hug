@@ -18,7 +18,7 @@ echo                   2. Check File Structure,
 echo.
 echo                      0. Exit Launcher.
 echo.
-set /p choice=Enter your choice: 
+set /p choice=Select, Options '1-2' or '0' To Exit : 
 
 if "%choice%"=="1" goto startScript
 if "%choice%"=="2" goto checkScript
@@ -71,10 +71,10 @@ if exist ".\Completed" (
     echo ...Completed Folder Missing.
     set missing=1
 )
-if exist ".\temporary" (
-    echo ...Temporary Folder Present.
+if exist ".\cache" (
+    echo ...Cache Folder Present.
 ) else (
-    echo ...Temporary Folder Missing.
+    echo ...Cache Folder Missing.
     set missing=1
 )
 timeout /t 1 /nobreak >nul

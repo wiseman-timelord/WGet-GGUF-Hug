@@ -19,7 +19,7 @@ echo                        3. x64a (ARM64),
 echo.
 echo                       0. Exit Installer.
 echo.
-set /p choice=Select, CPU Architecture '1-3' or '0' To Exit: 
+set /p choice=Select, Architecture '1-3' or '0' To Exit: 
 
 if "%choice%"=="1" (
     set WGET_URL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe
@@ -51,10 +51,10 @@ if not exist ".\libraries" (
     mkdir ".\libraries"
     echo ...Libraries Folder Created.
 )
-if not exist ".\temporary" (
-    echo Creating .\temporary folder...
-    mkdir ".\temporary"
-    echo ...Temporary Folder Created.
+if not exist ".\cache" (
+    echo Creating .\cache folder...
+    mkdir ".\cache"
+    echo ...Cache Folder Created.
 )
 if not exist ".\Completed" (
     echo Creating .\Completed folder...
@@ -69,11 +69,11 @@ if exist ".\libraries\*.exe" del ".\libraries\*.exe"
 echo ...Libraries Emptied.
 echo.
 timeout /t 1 /nobreak >nul
-echo Clearing Temporary...
-if exist ".\temporary\*.txt" del ".\temporary\*.txt"
-if exist ".\temporary\*.exe" del ".\temporary\*.exe"
-if exist ".\temporary\*.zip" del ".\temporary\*.zip"
-echo ...Temporary Emptied.
+echo Clearing Cache...
+if exist ".\cache\*.txt" del ".\cache\*.txt"
+if exist ".\cache\*.exe" del ".\cache\*.exe"
+if exist ".\cache\*.zip" del ".\cache\*.zip"
+echo ...Cache Emptied.
 echo.
 goto download_files
 
@@ -85,15 +85,15 @@ echo WGet Download Finished.
 echo.
 timeout /t 1 /nobreak >nul
 echo Downloading SigCheck...
-powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://download.sysinternals.com/files/Sigcheck.zip' -OutFile '.\temporary\Sigcheck.zip' }"
+powershell -Command "& { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://download.sysinternals.com/files/Sigcheck.zip' -OutFile '.\cache\Sigcheck.zip' }"
 echo SigCheck Download Finished.
 echo.
 
 :process_sigcheck
 timeout /t 1 /nobreak >nul
 echo Extracting and Preparing SigCheck...
-if exist ".\temporary\Sigcheck.zip" (
-    powershell -Command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('.\temporary\Sigcheck.zip', '.\temporary'); Move-Item -Path '.\temporary\%SIGCHECK_EXE%' -Destination '.\libraries\sigcheck.exe' }"
+if exist ".\cache\Sigcheck.zip" (
+    powershell -Command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('.\cache\Sigcheck.zip', '.\cache'); Move-Item -Path '.\cache\%SIGCHECK_EXE%' -Destination '.\libraries\sigcheck.exe' }"
     echo ...SigCheck Preparation Complete.
 ) else (
     echo ...Extracting SigCheck Failed.
@@ -103,11 +103,11 @@ echo.
 
 :cleanup_process
 timeout /t 1 /nobreak >nul
-echo ...Deleting Temporary Files...
-if exist ".\temporary\*.txt" del ".\temporary\*.txt"
-if exist ".\temporary\*.exe" del ".\temporary\*.exe"
-if exist ".\temporary\*.zip" del ".\temporary\*.zip"
-echo ...Temporary Files Deleted.
+echo ...Deleting Cache Files...
+if exist ".\cache\*.txt" del ".\cache\*.txt"
+if exist ".\cache\*.exe" del ".\cache\*.exe"
+if exist ".\cache\*.zip" del ".\cache\*.zip"
+echo ...Cache Files Deleted.
 echo.
 goto check_libraries
 
