@@ -10,7 +10,6 @@ Status: Development (O_o/'
 - Complementing Optimizations
 - Improvements for UI layout in main script.
 - All scripts now have same visual themes
-- Implementation of SigCheck library, to check the WGet is the correct WGet (this may be removed later).
 - Retry code re-implemented.
 - Setup upgraded to perfection.
 
