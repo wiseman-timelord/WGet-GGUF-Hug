@@ -3,7 +3,7 @@
 :: Initialization
 mode con cols=60 lines=30
 color 0E
-title WGet-LLM-Hug Launcher
+title WGetLlmHug-Psc Launcher
 echo.
 echo Launcher Script Started...
 
@@ -13,13 +13,11 @@ cls
 echo.
 echo =====================( WGetLlmHug-Psc )=====================
 echo.
-echo                    1. Start WGetLlmHug-Psc,
-echo                    2. Check File Structure,
+echo                   1. Start WGetLlmHug-Psc,
+echo                   2. Check File Structure,
 echo.
-echo                    0. Exit Launcher.
+echo                      0. Exit Launcher.
 echo.
-echo.
-echo \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 set /p choice=Enter your choice: 
 
 if "%choice%"=="1" goto startScript
@@ -31,6 +29,7 @@ goto menu
 
 :startScript
 echo.
+echo.
 echo Launching PowerShellCore Script...
 timeout /t 1 /nobreak >nul
 pwsh.exe -NoProfile -ExecutionPolicy Bypass -File ".\main.ps1"
@@ -40,6 +39,7 @@ timeout /t 1 /nobreak >nul
 goto end
 
 :checkScript
+echo.
 echo.
 set missing=0
 echo Checking Library Files...
@@ -80,14 +80,14 @@ if exist ".\temporary" (
 timeout /t 1 /nobreak >nul
 if %missing%==1 (
     echo.
-    echo Some, Folders And/Or Files, Missing...
+    echo File Structure Incorrect...
     echo ...Run Setup-Install Now!
 	echo.
     timeout /t 2 /nobreak >nul
 	goto end
 ) else (
 	echo.
-    echo All, Folders And Files, Present...
+    echo File Structure Correct...
 	echo ...Returning To Menu.
 	echo.
     timeout /t 2 /nobreak >nul
