@@ -108,5 +108,5 @@ emporary/quant  38%[>    ]   2.77G  1.49MB/s    eta 58m 57s
 ## Note
 WGetLlmHug-Psc is a simplified concept compared to "Downlord", WGetLlmHug-Psc is focused on language models, where as Downlord is intended as a more general purpose downloader.
 
-## Disclaimer
-This program is provided "as is" without warranties or support. Users are responsible for the content they, download and use, as well as, any resulting damage to, hardware or sanity.
+### DISCLAIMER
+Read "License.Txt", its, what its there for and why its supplied with the package.
